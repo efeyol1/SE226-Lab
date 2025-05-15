@@ -1,0 +1,199 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(36, 37, 26, 27, 28, 29);
+
+int dPTop=22;
+int bPinMid=28;
+int cPinTopLeft=27;
+int dPinBotLeft=26;
+int ePinBot=25;
+int fPinBotRight=24;
+int gPinTopRight=23;
+
+int GND1=36;
+int GND2=35;
+int GND3=34;
+int GND4=33;
+
+int dig1=0;
+int dig2=0;
+int dig3=0;
+int dig4=0;
+
+
+void setup() {
+ pinMode(dPTop, OUTPUT);
+ pinMode(bPinMid, OUTPUT);
+ pinMode(cPinTopLeft, OUTPUT);
+ pinMode(dPinBotLeft, OUTPUT);
+ pinMode(ePinBot, OUTPUT);
+ pinMode(fPinBotRight, OUTPUT);
+ pinMode(gPinTopRight, OUTPUT);
+ pinMode(GND1, OUTPUT);
+ pinMode(GND2, OUTPUT);
+ pinMode(GND3, OUTPUT);
+ pinMode(GND4, OUTPUT);
+
+}
+
+void zero() {
+  digitalWrite(dPTop, LOW);
+  digitalWrite(bPinMid, LOW);
+  digitalWrite(cPinTopLeft, LOW);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, LOW);
+  digitalWrite(fPinBotRight, LOW);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void one() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, LOW);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, HIGH);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void two() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, LOW);
+  digitalWrite(dPinBotLeft, HIGH);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, LOW);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void three() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, LOW);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void four() {
+  digitalWrite(dPTop, LOW);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, LOW);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void five() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, LOW);
+}
+
+void six() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, HIGH);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, LOW);
+}
+
+void seven() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, LOW);
+  digitalWrite(cPinTopLeft, LOW);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, LOW);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void eight() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, HIGH);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+
+void nine() {
+  digitalWrite(dPTop, HIGH);
+  digitalWrite(bPinMid, HIGH);
+  digitalWrite(cPinTopLeft, HIGH);
+  digitalWrite(dPinBotLeft, LOW);
+  digitalWrite(ePinBot, HIGH);
+  digitalWrite(fPinBotRight, HIGH);
+  digitalWrite(gPinTopRight, HIGH);
+}
+void incrementCounter() {
+ dig1++;
+ if (dig1 >= 10) {
+ dig1 = 0;
+ dig2++;
+ }
+// To be implemented
+}
+
+void loop() {
+  displayDigits();
+  delay(1000);
+  incrementCounter();
+  updateLCD();
+}
+
+void displayDigits() {
+  showDigit(dig1);
+  digitalWrite(GND4, HIGH);
+  delay(40);
+  digitalWrite(GND4, LOW);
+
+  showDigit(dig2);
+  digitalWrite(GND3, HIGH);
+  delay(40);
+  digitalWrite(GND3, LOW);
+
+  showDigit(dig3);
+  digitalWrite(GND2, HIGH);
+  delay(40);
+  digitalWrite(GND2, LOW);
+
+  showDigit(dig4);
+  digitalWrite(GND1, HIGH);
+  delay(40);
+  digitalWrite(GND1, LOW);
+}
+
+void showDigit(int num) {
+  switch(num) {
+    case 0: zero(); break;
+    case 1: one(); break;
+    case 2: two(); break;
+    case 3: three(); break;
+    case 4: four(); break;
+    case 5: five(); break;
+    case 6: six(); break;
+    case 7: seven(); break;
+    case 8: eight(); break;
+    case 9: nine(); break;
+  }
+}
+
+void updateLCD() {
+  lcd.setCursor(0, 0);
+  lcd.print("Counter: ");
+  lcd.print(dig4);
+  lcd.print(dig3);
+  lcd.print(dig2);
+  lcd.print(dig1);
+  lcd.print(" ");
+}
